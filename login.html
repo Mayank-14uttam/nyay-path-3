@@ -1,0 +1,1030 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Login & Account — NYAY PATH</title>
+  <meta
+    name="description"
+    content="Sign in to manage your NYAY PATH legal consultations or create a client account."
+  >
+
+  <link rel="stylesheet" href="dashboard.css">
+
+  <style>
+    :root {
+      --np-navy: #0b1f3a;
+      --np-navy-light: #16375f;
+      --np-gold: #c9a227;
+      --np-gold-light: #f4e8bd;
+      --np-bg: #f5f7fa;
+      --np-white: #ffffff;
+      --np-text: #182230;
+      --np-muted: #667085;
+      --np-border: #dfe4ea;
+      --np-danger: #b42318;
+      --np-success: #067647;
+      --np-shadow: 0 24px 70px rgba(11, 31, 58, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(201,162,39,.08), transparent 30%),
+        linear-gradient(135deg, #f8fafc 0%, #eef2f6 100%);
+      color: var(--np-text);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .auth-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(320px, 1fr) minmax(420px, 560px);
+    }
+
+    .auth-brand-panel {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 70px;
+      background:
+        linear-gradient(145deg, rgba(11,31,58,.98), rgba(22,55,95,.96));
+      color: white;
+    }
+
+    .auth-brand-panel::before {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border: 1px solid rgba(201,162,39,.22);
+      border-radius: 50%;
+      right: -180px;
+      top: -130px;
+    }
+
+    .auth-brand-panel::after {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border: 1px solid rgba(201,162,39,.10);
+      border-radius: 50%;
+      left: -300px;
+      bottom: -300px;
+    }
+
+    .brand-content {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+    }
+
+    .brand-mark {
+      width: 58px;
+      height: 58px;
+      border: 1px solid var(--np-gold);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--np-gold);
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 28px;
+    }
+
+    .brand-kicker {
+      color: #d9c47a;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .brand-content h1 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: clamp(40px, 5vw, 68px);
+      line-height: 1.02;
+      letter-spacing: -.8px;
+    }
+
+    .brand-content h1 span {
+      color: #d9c47a;
+    }
+
+    .brand-content p {
+      max-width: 470px;
+      margin: 24px 0 0;
+      color: #c9d2df;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .trust-list {
+      display: grid;
+      gap: 13px;
+      margin-top: 38px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #e4e9ef;
+      font-size: 14px;
+    }
+
+    .trust-icon {
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(201,162,39,.55);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--np-gold);
+      font-size: 12px;
+      flex: 0 0 auto;
+    }
+
+    .auth-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 28px;
+      background: #fff;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .mobile-brand {
+      display: none;
+      margin-bottom: 28px;
+    }
+
+    .mobile-brand strong {
+      font-family: Georgia, serif;
+      font-size: 27px;
+      color: var(--np-navy);
+    }
+
+    .mobile-brand span {
+      display: block;
+      margin-top: 4px;
+      color: var(--np-muted);
+      font-size: 12px;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+    }
+
+    .auth-heading {
+      margin-bottom: 28px;
+    }
+
+    .auth-heading h2 {
+      margin: 0;
+      color: var(--np-navy);
+      font-family: Georgia, serif;
+      font-size: 34px;
+      line-height: 1.15;
+    }
+
+    .auth-heading p {
+      margin: 9px 0 0;
+      color: var(--np-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 4px;
+      margin-bottom: 24px;
+      background: #f1f3f6;
+      border-radius: 11px;
+    }
+
+    .tab {
+      border: 0;
+      padding: 11px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--np-muted);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: white;
+      color: var(--np-navy);
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .field input {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      border: 1px solid var(--np-border);
+      border-radius: 9px;
+      outline: none;
+      background: white;
+      color: var(--np-text);
+      font: inherit;
+      transition: .18s ease;
+    }
+
+    .field input:focus {
+      border-color: var(--np-navy-light);
+      box-shadow: 0 0 0 3px rgba(22,55,95,.08);
+    }
+
+    .password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      color: var(--np-muted);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .password-toggle + input {
+      padding-right: 70px;
+    }
+
+    .primary-btn {
+      width: 100%;
+      height: 50px;
+      margin-top: 3px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--np-navy);
+      color: white;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .primary-btn:hover {
+      background: var(--np-navy-light);
+      transform: translateY(-1px);
+    }
+
+    .primary-btn:disabled {
+      opacity: .65;
+      cursor: wait;
+      transform: none;
+    }
+
+    .message {
+      min-height: 20px;
+      margin: 10px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .message.error {
+      color: var(--np-danger);
+    }
+
+    .message.success {
+      color: var(--np-success);
+    }
+
+    .guest-box {
+      margin-top: 24px;
+      padding: 17px;
+      border: 1px solid #eadfb7;
+      border-radius: 11px;
+      background: #fffaf0;
+    }
+
+    .guest-box strong {
+      display: block;
+      color: var(--np-navy);
+      font-size: 14px;
+    }
+
+    .guest-box p {
+      margin: 5px 0 12px;
+      color: var(--np-muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .guest-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--np-navy);
+      border-radius: 8px;
+      color: var(--np-navy);
+      background: white;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .portal-link {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #edf0f3;
+      text-align: center;
+    }
+
+    .portal-link a {
+      color: var(--np-navy);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 22px;
+      color: var(--np-muted);
+      text-align: center;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .back-link:hover,
+    .portal-link a:hover {
+      text-decoration: underline;
+    }
+
+    .legal-note {
+      margin-top: 24px;
+      color: #98a2b3;
+      font-size: 11px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 900px) {
+      .auth-page {
+        grid-template-columns: 1fr;
+      }
+
+      .auth-brand-panel {
+        display: none;
+      }
+
+      .auth-panel {
+        min-height: 100vh;
+        padding: 35px 22px;
+      }
+
+      .mobile-brand {
+        display: block;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .auth-panel {
+        padding: 28px 17px;
+      }
+
+      .auth-heading h2 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="auth-page">
+
+    <!-- LEFT BRAND PANEL -->
+    <aside class="auth-brand-panel">
+      <div class="brand-content">
+
+        <div class="brand-mark">न्या</div>
+
+        <div class="brand-kicker">
+          Legal Consultants & Solutions Pvt. Ltd.
+        </div>
+
+        <h1>
+          Legal guidance.<br>
+          <span>Without the complexity.</span>
+        </h1>
+
+        <p>
+          Connect with a legal professional, choose a convenient
+          consultation slot and manage your consultation securely
+          through NYAY PATH.
+        </p>
+
+        <div class="trust-list">
+
+          <div class="trust-item">
+            <span class="trust-icon">✓</span>
+            <span>Secure account authentication</span>
+          </div>
+
+          <div class="trust-item">
+            <span class="trust-icon">✓</span>
+            <span>Verified consultation workflow</span>
+          </div>
+
+          <div class="trust-item">
+            <span class="trust-icon">✓</span>
+            <span>Professional legal consultation portal</span>
+          </div>
+
+        </div>
+
+      </div>
+    </aside>
+
+
+    <!-- RIGHT AUTH PANEL -->
+    <main class="auth-panel">
+
+      <div class="auth-card">
+
+        <div class="mobile-brand">
+          <strong>NYAY PATH</strong>
+          <span>Legal Consultants & Solutions</span>
+        </div>
+
+
+        <div class="auth-heading">
+          <h2 id="heading">Welcome back</h2>
+          <p id="subheading">
+            Sign in to manage your consultations and account.
+          </p>
+        </div>
+
+
+        <!-- TABS -->
+        <div class="tabs">
+
+          <button
+            type="button"
+            class="tab active"
+            id="loginTab"
+          >
+            Sign In
+          </button>
+
+          <button
+            type="button"
+            class="tab"
+            id="registerTab"
+          >
+            Create Account
+          </button>
+
+        </div>
+
+
+        <!-- LOGIN -->
+        <form id="login" class="auth-form active">
+
+          <div class="field">
+            <label for="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+            >
+          </div>
+
+
+          <div class="field">
+            <label for="password">Password</label>
+
+            <div class="input-wrap">
+
+              <input
+                id="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter your password"
+                minlength="8"
+                required
+              >
+
+              <button
+                type="button"
+                class="password-toggle"
+                data-target="password"
+              >
+                Show
+              </button>
+
+            </div>
+          </div>
+
+
+          <button
+            class="primary-btn"
+            id="loginBtn"
+            type="submit"
+          >
+            Sign In
+          </button>
+
+          <p
+            id="msg"
+            class="message"
+            aria-live="polite"
+          ></p>
+
+        </form>
+
+
+        <!-- REGISTER -->
+        <form id="register" class="auth-form">
+
+          <div class="field">
+            <label for="rname">Full name</label>
+            <input
+              id="rname"
+              type="text"
+              autocomplete="name"
+              placeholder="Your full name"
+              required
+            >
+          </div>
+
+
+          <div class="field">
+            <label for="remail">Email address</label>
+            <input
+              id="remail"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+            >
+          </div>
+
+
+          <div class="field">
+            <label for="rphone">Mobile number</label>
+            <input
+              id="rphone"
+              type="tel"
+              inputmode="numeric"
+              autocomplete="tel"
+              placeholder="10-digit mobile number"
+              maxlength="10"
+              pattern="[0-9]{10}"
+            >
+          </div>
+
+
+          <div class="field">
+            <label for="rpass">Password</label>
+
+            <div class="input-wrap">
+
+              <input
+                id="rpass"
+                type="password"
+                autocomplete="new-password"
+                placeholder="Minimum 8 characters"
+                minlength="8"
+                required
+              >
+
+              <button
+                type="button"
+                class="password-toggle"
+                data-target="rpass"
+              >
+                Show
+              </button>
+
+            </div>
+          </div>
+
+
+          <button
+            class="primary-btn"
+            id="registerBtn"
+            type="submit"
+          >
+            Create Client Account
+          </button>
+
+          <p
+            id="rmsg"
+            class="message"
+            aria-live="polite"
+          ></p>
+
+        </form>
+
+
+        <!-- GUEST BOOKING -->
+        <div class="guest-box">
+
+          <strong>Don't want to create an account?</strong>
+
+          <p>
+            You can request a legal consultation as a guest.
+            An account is not required to submit a consultation request.
+          </p>
+
+          <a
+            class="guest-btn"
+            href="index.html#consultation"
+          >
+            Continue as Guest
+          </a>
+
+        </div>
+
+
+        <!-- ADVOCATE / ADMIN -->
+        <div class="portal-link">
+          <a href="login.html" id="portalText">
+            Advocate / Admin Portal
+          </a>
+        </div>
+
+
+        <a
+          class="back-link"
+          href="index.html"
+        >
+          ← Back to NYAY PATH website
+        </a>
+
+
+        <div class="legal-note">
+          Your account information is used only for authentication
+          and consultation management.
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <script>
+    const API = window.NYAY_PATH_API || '/api';
+
+    const $ = (selector) => document.querySelector(selector);
+
+    const loginForm = $('#login');
+    const registerForm = $('#register');
+
+    const loginTab = $('#loginTab');
+    const registerTab = $('#registerTab');
+
+    const heading = $('#heading');
+    const subheading = $('#subheading');
+
+    const loginMessage = $('#msg');
+    const registerMessage = $('#rmsg');
+
+    const loginButton = $('#loginBtn');
+    const registerButton = $('#registerBtn');
+
+
+    function setMessage(element, text, type = '') {
+      element.textContent = text;
+      element.className = 'message' + (type ? ' ' + type : '');
+    }
+
+
+    function setLoading(button, loading, text, normalText) {
+      button.disabled = loading;
+      button.textContent = loading ? text : normalText;
+    }
+
+
+    function goToDashboard(role) {
+
+      if (role === 'ADMIN') {
+        location.href = 'admin-dashboard.html';
+        return;
+      }
+
+      if (role === 'ADVOCATE') {
+        location.href = 'advocate-dashboard.html';
+        return;
+      }
+
+      location.href = 'user-dashboard.html';
+    }
+
+
+    function showLogin() {
+
+      loginTab.classList.add('active');
+      registerTab.classList.remove('active');
+
+      loginForm.classList.add('active');
+      registerForm.classList.remove('active');
+
+      heading.textContent = 'Welcome back';
+      subheading.textContent =
+        'Sign in to manage your consultations and account.';
+
+      setMessage(loginMessage, '');
+      setMessage(registerMessage, '');
+    }
+
+
+    function showRegister() {
+
+      registerTab.classList.add('active');
+      loginTab.classList.remove('active');
+
+      registerForm.classList.add('active');
+      loginForm.classList.remove('active');
+
+      heading.textContent = 'Create your account';
+      subheading.textContent =
+        'Create a client account to manage your consultations.';
+
+      setMessage(loginMessage, '');
+      setMessage(registerMessage, '');
+    }
+
+
+    loginTab.addEventListener('click', showLogin);
+    registerTab.addEventListener('click', showRegister);
+
+
+    document.querySelectorAll('.password-toggle').forEach((button) => {
+
+      button.addEventListener('click', () => {
+
+        const input = document.getElementById(
+          button.dataset.target
+        );
+
+        if (!input) return;
+
+        const visible = input.type === 'text';
+
+        input.type = visible ? 'password' : 'text';
+        button.textContent = visible ? 'Show' : 'Hide';
+
+      });
+
+    });
+
+
+    loginForm.addEventListener('submit', async (event) => {
+
+      event.preventDefault();
+
+      setMessage(loginMessage, '');
+
+      const email = $('#email').value.trim();
+      const password = $('#password').value;
+
+      setLoading(
+        loginButton,
+        true,
+        'Signing in…',
+        'Sign In'
+      );
+
+      try {
+
+        const response = await fetch(
+          API + '/auth/login',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email,
+              password
+            })
+          }
+        );
+
+        let data = {};
+
+        try {
+          data = await response.json();
+        } catch (_) {}
+
+        if (!response.ok) {
+          throw new Error(
+            data.message || 'Unable to sign in. Please check your details.'
+          );
+        }
+
+        if (!data.token || !data.user) {
+          throw new Error(
+            'Login response was incomplete. Please try again.'
+          );
+        }
+
+        localStorage.setItem(
+          'nyaypath_token',
+          data.token
+        );
+
+        setMessage(
+          loginMessage,
+          'Login successful. Redirecting…',
+          'success'
+        );
+
+        setTimeout(() => {
+          goToDashboard(data.user.role);
+        }, 350);
+
+      } catch (error) {
+
+        setMessage(
+          loginMessage,
+          error.message || 'Unable to sign in.',
+          'error'
+        );
+
+        setLoading(
+          loginButton,
+          false,
+          'Signing in…',
+          'Sign In'
+        );
+
+      }
+
+    });
+
+
+    registerForm.addEventListener('submit', async (event) => {
+
+      event.preventDefault();
+
+      setMessage(registerMessage, '');
+
+      const name = $('#rname').value.trim();
+      const email = $('#remail').value.trim();
+      const phone = $('#rphone').value.trim();
+      const password = $('#rpass').value;
+
+      if (phone && !/^[0-9]{10}$/.test(phone)) {
+
+        setMessage(
+          registerMessage,
+          'Please enter a valid 10-digit mobile number.',
+          'error'
+        );
+
+        return;
+      }
+
+      if (password.length < 8) {
+
+        setMessage(
+          registerMessage,
+          'Password must contain at least 8 characters.',
+          'error'
+        );
+
+        return;
+      }
+
+      setLoading(
+        registerButton,
+        true,
+        'Creating account…',
+        'Create Client Account'
+      );
+
+      try {
+
+        const response = await fetch(
+          API + '/auth/register',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              phone,
+              password
+            })
+          }
+        );
+
+        let data = {};
+
+        try {
+          data = await response.json();
+        } catch (_) {}
+
+        if (!response.ok) {
+          throw new Error(
+            data.message || 'Unable to create your account.'
+          );
+        }
+
+        if (!data.token || !data.user) {
+          throw new Error(
+            'Account was created but login information was not returned.'
+          );
+        }
+
+        localStorage.setItem(
+          'nyaypath_token',
+          data.token
+        );
+
+        setMessage(
+          registerMessage,
+          'Account created successfully. Redirecting…',
+          'success'
+        );
+
+        setTimeout(() => {
+          goToDashboard('CLIENT');
+        }, 350);
+
+      } catch (error) {
+
+        setMessage(
+          registerMessage,
+          error.message || 'Unable to create account.',
+          'error'
+        );
+
+        setLoading(
+          registerButton,
+          false,
+          'Creating account…',
+          'Create Client Account'
+        );
+
+      }
+
+    });
+  </script>
+
+</body>
+</html>
+
